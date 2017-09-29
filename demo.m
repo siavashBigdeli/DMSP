@@ -1,17 +1,20 @@
 
-% add MatCaffe path
-addpath /mnt/data/siavash/caffe/matlab;
+addpath(genpath('DAEs'))
+
+% select denoiser
+denoiser_name = 'caffe'; % make sure matCaffe is installed and its location is added to path
+% denoiser_name = 'matconvnet'; % make sure matconvnet is installed and its location is added to path
 
 % set to 0 if you want to run on CPU (very slow)
 use_gpu = 1;
+% use_gpu = 0;
 
-
-%% Deblurring demo
+%% Load data
 
 % load image and kernel
-load('kernels.mat');
+load('data/kernels.mat');
 
-gt = double(imread('101085.jpg'));
+gt = double(imread('data/101085.jpg'));
 
 kernel = kernels{1};
 sigma_d = 255 * .01;
@@ -20,10 +23,16 @@ degraded = convn(gt, rot90(kernel,2), 'valid');
 noise = randn(size(degraded));
 degraded = degraded + noise * sigma_d;
 
-% load network for solver
-params.num_iter=300;
-params.net = loadNet(size(gt), use_gpu);
-params.gt = gt;
+% load denoiser for solver
+params.denoiser = loadDenoiser(denoiser_name, use_gpu, size(gt));
+
+% set parameters
+params.sigma_dae = 11; % correspones to the denoiser's training standard deviation
+params.num_iter = 300; % number of iterations
+params.gt = gt; % to print PSNR at each iteration
+
+
+%% non-blind deblurring demo
 
 % run DMSP
 restored = DMSPDeblur(degraded, kernel, sigma_d, params);

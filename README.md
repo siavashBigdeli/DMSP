@@ -13,16 +13,16 @@ In this paper we introduce a natural image prior that directly represents a Gaus
 See [manuscript](https://arxiv.org/pdf/1709.03749) for details of the method.
 
 
-This code runs in Matlab and you need to install [MatCaffe](http://caffe.berkeleyvision.org).
+This code runs in Matlab and you need to install either
+[MatCaffe](http://caffe.berkeleyvision.org) or
+[MatConvNet](http://www.vlfeat.org/matconvnet/).
 ### Contents:
 
 [demo.m](https://github.com/siavashBigdeli/DMSP/blob/master/demo.m): Includes an example for non-blind and noise-blind image deblurring.
 
 [DMSPDeblur.m](https://github.com/siavashBigdeli/DMSP/blob/master/DMSPDeblur.m): Implements MAP function for non-blind image deblurring. Use Matlab's help function to learn about the input and output arguments.
 
-[loadNet.m](https://github.com/siavashBigdeli/DMSP/blob/master/loadNet.m): Loads the Caffe 'net' object with our trained DAE.
+[DAEs](https://github.com/siavashBigdeli/DMSP/tree/master/DAEs): Includes DAE models and function handles (in Caffe and matconvnet).
 
-[computePSNR.m](https://github.com/siavashBigdeli/DMSP/blob/master/computePSNR.m): Computes peak signal-to-noise ratio.
-
-[model](https://github.com/siavashBigdeli/DMSP/tree/master/model): Includes our DAE model and learned parameters.
+[data](https://github.com/siavashBigdeli/DMSP/tree/master/data): Includes sample image and blur kernels.
 
