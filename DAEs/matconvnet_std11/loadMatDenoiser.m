@@ -2,11 +2,11 @@ function DAE = loadMatDenoiser(use_gpu)
 
 
 load('DAEs/matconvnet_std11/DAE_sigma11.mat')
-net.layers = net;
+net_obj.layers = net;
 if use_gpu
-    net = vl_simplenn_move(net, 'gpu');
+    net_obj = vl_simplenn_move(net_obj, 'gpu');
 else
-    net = vl_simplenn_tidy(net);
+    net_obj = vl_simplenn_tidy(net_obj);
 end
 
-DAE = @(x) DAE_mat(x, net);
+DAE = @(x) DAE_mat(x, net_obj);
